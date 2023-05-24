@@ -1,0 +1,9 @@
+$small: 0.885rem;
+$basic: 1rem;
+$large: 1.125rem;
+$bold: 700;
+
+@media (max-width: 768px) {
+  $basic: 0.885rem;
+  $large: 1rem;
+}

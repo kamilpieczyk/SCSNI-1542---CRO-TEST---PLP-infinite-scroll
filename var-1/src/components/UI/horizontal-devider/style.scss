@@ -1,0 +1,7 @@
+@use '../../../style/colors.scss' as color;
+
+.dy-horizontal-devider {
+  height: 1px;
+  width: 100%;
+  background-color: color.$grey;
+}

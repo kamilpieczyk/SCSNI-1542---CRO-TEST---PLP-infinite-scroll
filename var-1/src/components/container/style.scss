@@ -1,0 +1,14 @@
+@use '../../style/colors.scss' as color;
+@use '../../style/font.scss' as font;
+
+.dy-infinite-scroll-trigger {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+
+// modify existing related css
+.product-load-more-container {
+  display: none;
+}

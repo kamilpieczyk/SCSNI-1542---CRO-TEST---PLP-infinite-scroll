@@ -1,0 +1,33 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+#dy-app-container___cs-details-in-checkout {}
+
+.dy-mobile-hidden {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.dy-mobile-only-hidden {
+  @media (max-width: 365px) {
+    display: none;
+  }
+}
+
+.dy-desktop-hidden {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.dy-tablet-hidden {
+  @media (min-width: 365px) {
+    display: none;
+  }
+}
+
+.dy-hidden {
+  display: none;
+}

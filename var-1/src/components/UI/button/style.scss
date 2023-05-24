@@ -1,0 +1,16 @@
+@use "../../../style/colors.scss" as color;
+@use "../../../style/font.scss" as font;
+
+.dy-ui-button {
+  background-color: color.$white;
+  border: 1px solid color.$black;
+  border-radius: 50px;
+  height: 32px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: black !important;
+
+  &:hover {
+    background-color: color.$grey-1;
+  }
+}

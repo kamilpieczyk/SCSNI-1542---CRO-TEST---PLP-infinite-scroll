@@ -1,0 +1,7 @@
+@use '../../../style/colors.scss' as color;
+
+.dy-vertical-devider {
+  width: 1px;
+  height: 100%;
+  background-color: color.$grey;
+}
