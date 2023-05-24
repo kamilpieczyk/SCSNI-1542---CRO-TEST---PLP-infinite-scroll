@@ -1,5 +1,5 @@
 import './style.scss'
-import { createSignal, Show } from 'solid-js'
+import { createEffect, createSignal, Show } from 'solid-js'
 
 export default () => {
   const [count, setCount] = createSignal(1);
@@ -50,6 +50,7 @@ export default () => {
     
           newCards.forEach(newCard => {
             container.insertBefore(newCard, last.nextSibling)
+            setTimeout(() => switchOffTileImageLoading(newCard), 1000)
             round++
           })
         }
@@ -61,12 +62,31 @@ export default () => {
     }
   }
 
+  /**
+   * 
+   * @param {Element} tile 
+   */
+  const switchOffTileImageLoading = (tile) => {
+    const image = tile.querySelector('.tile-image img')
+
+    if (image) {
+      const src = image.getAttribute('data-src')
+      image.src = src
+    }
+  }
+
+  createEffect(() => {
+    if (getting())
+      document.body.style.overflow = 'hidden'
+    else
+      document.body.style.overflow = 'auto'
+  })
+
   handleScrollEvent()
   window.addEventListener('scroll', handleScrollEvent)
 
   return (
     <div className="dy-infinite-scroll-trigger" ref={ infiniteScrollBoxRef }>
-      {/* counter: { count } */}
       <Show when={ showLoader() }>
         <img
           src="https://www.scs.co.uk/on/demandware.static/Sites-SFRA_SCS-Site/-/en_GB/v1684919013831/images/product-details/live-chat/cta-logo-loading.svg"
