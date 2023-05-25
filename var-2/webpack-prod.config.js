@@ -32,8 +32,8 @@ const config = {
       banner: `
         Author: Kamil Pieczyk | for Sherwen Studios - www.sherwen.com
         email: kamil@sherwen.com
-        Title: ScS CRO Test - SCSNI-1512: CS details in checkout
-        git repository: https://github.com/kamilpieczyk/SCSNI-1512-CS-details-in-checkout.git
+        Title: ScS CRO Test
+        git repository: https://github.com/kamilpieczyk/SCSNI-1542---CRO-TEST---PLP-infinite-scroll
       `
     })
   ],

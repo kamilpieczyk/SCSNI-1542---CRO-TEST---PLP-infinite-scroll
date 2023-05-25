@@ -3,13 +3,15 @@ import { createEffect, createSignal, Show } from 'solid-js'
 
 export default () => {
   const [count, setCount] = createSignal(1);
+  const [resultsNo, setResultsNo] = createSignal(0);
+  const [tilesNo, setTilesNo] = createSignal(0);
   const [getting, setGetting] = createSignal(false);
   const [showLoader, setLoader] = createSignal(true);
 
   let infiniteScrollBoxRef;
 
-  const handleScrollEvent = () => {
-    if (infiniteScrollBoxRef && infiniteScrollBoxRef.getBoundingClientRect().top < 500 && infiniteScrollBoxRef.getBoundingClientRect().top > -100 && !getting()) {
+  const handleClickButton = () => {
+    if (infiniteScrollBoxRef && !getting()) {
       handleGetMoreTiles()
     }
   }
@@ -26,13 +28,27 @@ export default () => {
     return maxNo
   }
 
+  const getNextLink = (number) => {
+    let link = ''
+
+    const a = document.querySelector('[data-page-number="2"]');
+
+    if (a) {
+      let href = a.getAttribute('data-url')
+      href = href.replace('page=2', `page=${number}`)
+      link = href
+    }
+
+    return link
+  }
+
   const handleGetMoreTiles = async () => {
     const max = getMaxNumber();
 
     if (count() < max) {
       setGetting(true);
       setCount(prev => prev+1)
-      const url = `https://www.scs.co.uk/on/demandware.store/Sites-SFRA_SCS-Site/en_GB/Search-UpdateGrid?cgid=fabric-sofas&page=${count()}`
+      const url = getNextLink(count())
   
       const data = await fetch(url)
       const text = await data.text()
@@ -55,15 +71,12 @@ export default () => {
           })
         }
         setGetting(false);
+        getResultNumber();
       }, 1000)
-    }
-    else {
-      setLoader(false)
     }
   }
 
   /**
-   * 
    * @param {Element} tile 
    */
   const switchOffTileImageLoading = (tile) => {
@@ -75,6 +88,25 @@ export default () => {
     }
   }
 
+  const getResultNumber = () => {
+    const resultBox = document.querySelector('.filter-options__resultcount')
+    const tiles = document.dyQuerySelectorAll('.product.product-card.product-tile--sofa')
+
+    setTilesNo(tiles.length - 1)
+
+    if (resultBox) {
+      /**
+       * @type {string | number}
+       */
+      let text = resultBox.textContent.replace(' results', '')
+      text = Number(text)
+
+      setResultsNo(text)
+    }
+  }
+
+  getResultNumber()
+
   createEffect(() => {
     if (getting())
       document.body.style.overflow = 'hidden'
@@ -82,16 +114,33 @@ export default () => {
       document.body.style.overflow = 'auto'
   })
 
-  handleScrollEvent()
-  window.addEventListener('scroll', handleScrollEvent)
+  createEffect(() => {
+    const max = getMaxNumber();
+    if (count() >= max) {
+      setLoader(false)
+    }
+  })
 
   return (
     <div className="dy-infinite-scroll-trigger" ref={ infiniteScrollBoxRef }>
-      <Show when={ showLoader() }>
-        <img
-          src="https://www.scs.co.uk/on/demandware.static/Sites-SFRA_SCS-Site/-/en_GB/v1684919013831/images/product-details/live-chat/cta-logo-loading.svg"
-          alt="loading"
-        />
+      <p>
+        You’ve viewed { tilesNo() } of { resultsNo().toLocaleString() } products
+      </p>
+
+      <Show when={ showLoader() || getting() }>
+        <button
+          onClick={ handleClickButton }
+        >
+          <Show
+            when={ getting() }
+            fallback={ () => 'load more' }
+          >
+            <img
+              src="https://www.scs.co.uk/on/demandware.static/Sites-SFRA_SCS-Site/-/en_GB/v1684919013831/images/product-details/live-chat/cta-logo-loading.svg"
+              alt="loading"
+            />
+          </Show>
+        </button>
       </Show>
     </div>
   )
