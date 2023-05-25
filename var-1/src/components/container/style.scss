@@ -2,13 +2,19 @@
 @use '../../style/font.scss' as font;
 
 .dy-infinite-scroll-trigger {
-  display: grid;
-  place-items: center;
-  width: 100%;
+  display: none;
 }
 
-
-// modify existing related css
-.product-load-more-container {
-  display: none;
+@media (max-width: 768px) {
+  .dy-infinite-scroll-trigger {
+    display: grid;
+    place-items: center;
+    width: 100%;
+  }
+  
+  
+  // modify existing related css
+  .product-load-more-container {
+    display: none;
+  }
 }

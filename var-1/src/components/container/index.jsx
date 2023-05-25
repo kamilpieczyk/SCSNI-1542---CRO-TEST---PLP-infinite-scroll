@@ -26,13 +26,27 @@ export default () => {
     return maxNo
   }
 
+  const getNextLink = (number) => {
+    let link = ''
+
+    const a = document.querySelector('[data-page-number="2"]');
+
+    if (a) {
+      let href = a.getAttribute('data-url')
+      href = href.replace('page=2', `page=${number}`)
+      link = href
+    }
+
+    return link
+  }
+
   const handleGetMoreTiles = async () => {
     const max = getMaxNumber();
 
     if (count() < max) {
       setGetting(true);
       setCount(prev => prev+1)
-      const url = `https://www.scs.co.uk/on/demandware.store/Sites-SFRA_SCS-Site/en_GB/Search-UpdateGrid?cgid=fabric-sofas&page=${count()}`
+      const url = getNextLink(count())
   
       const data = await fetch(url)
       const text = await data.text()
