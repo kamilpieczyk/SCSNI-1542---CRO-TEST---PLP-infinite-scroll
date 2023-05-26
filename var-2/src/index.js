@@ -10,5 +10,5 @@ setTimeout(() => {
     container.parentNode.insertBefore(app, container);
     render(() => <App />, app);
   }
-}, 500)
+}, 1000)
 
