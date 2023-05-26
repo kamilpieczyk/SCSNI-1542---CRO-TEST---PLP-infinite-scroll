@@ -77,14 +77,17 @@ export default () => {
   }
 
   /**
+   * 
    * @param {Element} tile 
    */
   const switchOffTileImageLoading = (tile) => {
-    const image = tile.querySelector('.tile-image img')
+    const images = tile.querySelectorAll('img.lozad')
 
-    if (image) {
-      const src = image.getAttribute('data-src')
-      image.src = src
+    if (images.length > 0) {
+      images.forEach(image => {
+        const src = image.getAttribute('data-src')
+        image.src = src
+      })
     }
   }
 
@@ -107,12 +110,12 @@ export default () => {
 
   getResultNumber()
 
-  createEffect(() => {
-    if (getting())
-      document.body.style.overflow = 'hidden'
-    else
-      document.body.style.overflow = 'auto'
-  })
+  // createEffect(() => {
+  //   if (getting())
+  //     document.body.style.overflow = 'hidden'
+  //   else
+  //     document.body.style.overflow = 'auto'
+  // })
 
   createEffect(() => {
     const max = getMaxNumber();
@@ -135,9 +138,9 @@ export default () => {
             when={ getting() }
             fallback={ () => 'load more' }
           >
-            <img
-              src="https://www.scs.co.uk/on/demandware.static/Sites-SFRA_SCS-Site/-/en_GB/v1684919013831/images/product-details/live-chat/cta-logo-loading.svg"
-              alt="loading"
+            <object
+              data="https://www.scs.co.uk/on/demandware.static/Sites-SFRA_SCS-Site/-/en_GB/v1684919013831/images/product-details/live-chat/cta-logo-loading.svg"
+              // alt="loading"
             />
           </Show>
         </button>
