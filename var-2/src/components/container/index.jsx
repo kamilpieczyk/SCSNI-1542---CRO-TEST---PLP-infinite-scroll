@@ -34,7 +34,7 @@ export default () => {
     const a = document.querySelector('[data-page-number="2"]');
 
     if (a) {
-      let href = a.getAttribute('data-url')
+      let href = a.getAttribute('href')
       href = href.replace('page=2', `page=${number}`)
       link = href
     }
@@ -62,10 +62,12 @@ export default () => {
       setTimeout(() => {
         if (container && products.length > 0) {
           let round = 0
-          const last = products[products.length+round-1]
+
+          console.log(newCards)
     
           newCards.forEach(newCard => {
-            container.insertBefore(newCard, last.nextSibling)
+            const last = document.querySelector('#dy-app-container___infinite-scroll-container')
+            container.insertBefore(newCard, last)
             setTimeout(() => switchOffTileImageLoading(newCard), 1000)
             round++
           })
