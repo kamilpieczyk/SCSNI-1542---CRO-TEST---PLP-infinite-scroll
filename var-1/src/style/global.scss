@@ -31,3 +31,7 @@
 .dy-hidden {
   display: none;
 }
+
+.product-tile--sofa:not(.product-search-tile), .product-tile--standard:not(.product-search-tile), .product-tile--flooring:not(.product-search-tile) {
+  display: none;
+}

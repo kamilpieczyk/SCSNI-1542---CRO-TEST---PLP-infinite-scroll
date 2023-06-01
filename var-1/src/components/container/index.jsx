@@ -19,10 +19,14 @@ export default () => {
   const getMaxNumber = () => {
     let maxNo = 1;
     const links = document.querySelectorAll('.page-link');
+    let minusLength = 0
+
+    if (links.length > 3)
+      minusLength = 2;
 
     if (links) {
-      const maxLink = links[links.length-2];
-      maxNo = Number(maxLink.getAttribute('data-page-number'));
+      const maxLink = links[links.length-minusLength];
+      maxNo = maxLink ? Number(maxLink.getAttribute('data-page-number')) : maxNo;
     }
 
     return maxNo
@@ -34,7 +38,7 @@ export default () => {
     const a = document.querySelector('[data-page-number="2"]');
 
     if (a) {
-      let href = a.getAttribute('data-url')
+      let href = a.getAttribute('href')
       href = href.replace('page=2', `page=${number}`)
       link = href
     }
@@ -62,15 +66,15 @@ export default () => {
       setTimeout(() => {
         if (container && products.length > 0) {
           let round = 0
-          const last = products[products.length+round-1]
     
           newCards.forEach(newCard => {
-            container.insertBefore(newCard, last.nextSibling)
-            setTimeout(() => switchOffTileImageLoading(newCard), 1000)
+            const last = document.querySelector('#dy-app-container___infinite-scroll-container')
+            container.insertBefore(newCard, last)
+            setTimeout(() => switchOffTileImageLoading(newCard), 2000)
             round++
           })
         }
-        setGetting(false);
+        setTimeout(() => setGetting(false), 1000)
       }, 1000)
     }
     else {
@@ -83,7 +87,6 @@ export default () => {
    * @param {Element} tile 
    */
   const switchOffTileImageLoading = (tile) => {
-    // const image = tile.querySelector('.tile-image img')
     const images = tile.querySelectorAll('img.lozad')
 
     if (images.length > 0) {
@@ -93,13 +96,6 @@ export default () => {
       })
     }
   }
-
-  // createEffect(() => {
-  //   if (getting())
-  //     document.body.style.overflow = 'hidden'
-  //   else
-  //     document.body.style.overflow = 'auto'
-  // })
 
   handleScrollEvent()
   window.addEventListener('scroll', handleScrollEvent)
